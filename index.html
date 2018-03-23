@@ -1,0 +1,177 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ro Sham Bo">
+  <meta name="keywords" content="HTML,CSS,JavaScript">
+  <meta name="author" content="Surbhi Singh">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<link rel="shortcut icon" type="image/png" href="bg.jpg"/>
+<link href='https://fonts.googleapis.com/css?family=Unica One' rel='stylesheet'>
+
+
+<link rel="stylesheet" type="text/css" href="web.css">
+
+<title> Ro Sham Bo</title>
+
+<body bgcolor="	#e6d9f2" >
+
+<h1 class = "Heading"> Ro.Sham.Bo</h1>	
+<hr class = "firsthr">	
+
+
+<input class = "play rock" type="image" onclick="play('rock')" src="C:\xampp\htdocs\RoShamBo\rock.jpg" alt="Rock">
+
+
+<input class = "play paper" type="image" onclick="play('paper')" src="C:\xampp\htdocs\RoShamBo\paper.jpeg" alt="Paper">
+
+<input class = "play scissors" type="image" onclick="play('scissors')" src="C:\xampp\htdocs\RoShamBo\scissors.jpeg" alt="Scissors">
+
+
+<footer class = "feedbox">
+
+		<div class="userScore">Your score:<span id="wins">0 </span></div>
+		<div class="computerScore">Computers score:<span id="loses">0 </span></div>	
+
+		<p><span class = "feed1" id="player"></span> <span class = "feed2" id="opponent"></span></p>
+		<h2 id="results"></h2>	
+
+		<input class = "help" id = "userHelp" type="image" src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Lol_question_mark.png" alt="Help">
+
+<div id="gameHelp" class="modal">
+
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1 class = "Modal_text"><u>How to play</u></h1>
+	<hr>
+	<p> Ro.Sham.Bo is a game of <b>Probability</b> in which the player chooses an object to combat the computers object.The player to reach score 3 first, becomes the winner. </p>
+	<p><u><b>Rock - </b></u> Rock breaks the scissor and hence wins,but it is wrapped and defeated by the paper.</p>
+	<p><u><b>Paper - </b></u> Paper wraps the rock and wins, but it gets cut by scissor.</p>
+	<p><u><b>Scissors - </b></u> Scissor wins against paper by cutting.</p>
+	<hr>
+	<p> Ro.Sham.Bo by Surbhi Singh,2018.</p>
+  </div>
+
+</div>
+</footer>		
+
+<script>
+
+var loses = 0;
+var wins = 0;
+			
+var play = function(userChoice) {
+					
+				
+				     	document.getElementById("player").innerHTML="";
+					document.getElementById("opponent").innerHTML="";
+					document.getElementById("results").innerHTML="";
+
+					
+					if (userChoice == "rock" || userChoice == "paper" || userChoice == "scissors") {
+						document.getElementById("player").innerHTML='You chose' + ' ' + userChoice + '.';
+					} else if (userChoice == "rope") {
+						document.getElementById("player").innerHTML='You chose' + ' ' + userChoice + '.';
+					} else {
+						document.getElementById("player").innerHTML="That is not a valid choice, try again.";
+						
+						return false;
+					}
+				
+					var computerChoice = Math.random();
+					if (computerChoice < 0.34) {
+						computerChoice = "paper";
+					} else if(computerChoice <= 0.67) {
+						computerChoice = "rock";
+					} else {
+						computerChoice = "scissors"} ;
+
+				 
+				 	document.getElementById("opponent").innerHTML=' The computer chose ' + ' ' + computerChoice + '.';
+				 	
+				 
+					 var compare = function (choice1,choice2) {
+						if (choice1 == choice2) {
+							return "The result is a tie!";
+						} else if (choice1 == "rock"){
+							if (choice2 =="scissors") {
+								wins++;
+								return "Rock beats scissors, you win";
+							} else {
+								loses++;
+								return "Scissors beats paper, you lose";
+							}
+						} else if (choice1 == "paper") {
+							if (choice2 == "rock") {
+								wins++;
+								return "Paper beats rock, you win";
+							} else {
+								loses++;
+								return "Scissors beats paper, you lose";
+							}
+						} else if (choice1 == "scissors") {
+							if (choice2 == "rock") {
+								loses++;
+								return "Rock beats scissors, you lose";
+							} else {
+								wins++;
+								return "Paper beats rock, you win";
+							}
+						} else if (choice1 == "rope") {
+							wins++;
+							return "";
+						} else {
+							return "";
+						}
+					};
+
+					var winner = compare(userChoice,computerChoice);
+
+					document.getElementById("results").innerHTML=winner;
+
+					document.getElementById("wins").innerHTML=wins;
+					document.getElementById("loses").innerHTML=loses;
+					
+					if (wins > 99 || loses > 99) {
+						document.getElementById("wins").style.fontSize="44";
+						document.getElementById("loses").style.fontSize="44";
+					}
+					
+					if (wins == 3) {
+						alert("You win!");
+						loses = 0;
+						wins = 0;
+					}
+					if (loses == 3) {
+						alert("You lose");
+						loses = 0;
+						wins = 0;
+					}
+			};
+
+var reset = function() {
+	loses = 0;
+	wins = 0;
+	document.getElementById("wins").innerHTML=wins;
+	document.getElementById("loses").innerHTML=loses;
+};
+
+var modal = document.getElementById('gameHelp');
+var button = document.getElementById("userHelp");
+var span = document.getElementsByClassName("close")[0];
+
+button.onclick = function() {
+    modal.style.display = "block";
+}
+span.onclick = function() {
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>				
+</body>
+</html>
